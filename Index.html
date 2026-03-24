@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>แบบคัดกรอง E-Smart CKD screening (ห้วยกะปิ)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #4A90E2;
+            --bg-color: #F0F4F8;
+            --text-color: #333333;
+            --border-color: #dce4ec;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            color: var(--primary-color);
+            margin: 0 0 8px 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .header p { margin: 0; font-size: 14px; color: #666; }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--primary-color), #1a5276);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 5px;
+            flex-wrap: wrap;
+        }
+        .form-group {
+            flex: 1 1 220px;
+            margin-bottom: 15px;
+        }
+        .form-group.full-width { flex: 1 1 100%; }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            color: var(--primary-color);
+            font-size: 15px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: #fff;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(74,144,226,0.15);
+        }
+        input[readonly], input[disabled] {
+            background-color: #f0f0f0;
+            cursor: default;
+        }
+        .note {
+            font-size: 13px;
+            color: #888;
+            margin: 4px 0 0 0;
+            font-style: italic;
+        }
+        .scoring-note {
+            font-size: 13px;
+            color: #e67e22;
+            font-weight: 600;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* =================== CHECKBOX GROUPS =================== */
+        .checkbox-group-wrapper {
+            background-color: #f8fafc;
+            padding: 18px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .checkbox-group-title {
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--primary-color);
+            border-bottom: 2px solid #dce4ec;
+            padding-bottom: 8px;
+            font-size: 16px;
+        }
+        .checkbox-sub-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 14px 0 8px 0;
+            font-size: 15px;
+        }
+        .checkbox-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+        }
+        .checkbox-item label {
+            font-weight: normal;
+            color: var(--text-color);
+            margin-bottom: 0;
+            cursor: pointer;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+        .condition-detail {
+            display: none;
+            width: 90px;
+            padding: 4px 8px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #bbb;
+            font-family: 'Sarabun', sans-serif;
+            margin: 0 4px;
+            vertical-align: middle;
+        }
+        .condition-detail.text-wide {
+            width: 200px;
+        }
+
+        /* =================== VITAL SIGNS INLINE =================== */
+        .inline-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .inline-group input { flex: 1; }
+        .inline-sep { font-size: 20px; color: #888; font-weight: bold; }
+
+        /* =================== BUTTONS =================== */
+        .btn-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .btn-submit {
+            flex: 1 1 200px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-submit:hover { background-color: #002244; transform: translateY(-1px); }
+        .btn-submit:active { transform: translateY(0); }
+        .btn-submit:disabled { background-color: #aaa; cursor: not-allowed; transform: none; }
+        .btn-reset {
+            flex: 0 0 auto;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif;
+            transition: background-color 0.2s;
+        }
+        .btn-reset:hover { background-color: #545b62; }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            padding: 12px;
+            background: #e8f4f8;
+            border-radius: 8px;
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* =================== RESULT BOX =================== */
+        .result-wrapper { display: none; margin-top: 25px; }
+        .result-box {
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid;
+        }
+        .result-title-main {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            .result-grid { grid-template-columns: 1fr; }
+        }
+        .result-item {
+            background: rgba(255,255,255,0.5);
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .result-item .label { font-weight: 700; display: block; margin-bottom: 3px; font-size: 13px; opacity: 0.8; }
+        .result-item .value { font-size: 17px; font-weight: 700; }
+        .result-item.full-col { grid-column: 1 / -1; }
+
+        .risk-low    { background-color: #D4EDDA; color: #155724; border-color: #C3E6CB; }
+        .risk-medium { background-color: #FFF3CD; color: #856404; border-color: #FFEEBA; }
+        .risk-high   { background-color: #F8D7DA; color: #721C24; border-color: #F5C6CB; }
+        .risk-veryhigh { background-color: #ffcccc; color: #990000; border-color: #ff9999; }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            background: rgba(255,255,255,0.6);
+            border: 2px solid currentColor;
+            margin-top: 5px;
+        }
+
+        .disclaimer {
+            font-size: 13px;
+            opacity: 0.75;
+            text-align: center;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* =================== SCORE BREAKDOWN =================== */
+        .score-breakdown {
+            background: rgba(255,255,255,0.4);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+        .score-breakdown table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .score-breakdown td {
+            padding: 4px 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .score-breakdown td:last-child { text-align: right; font-weight: 700; }
+
+        /* =================== VALIDATION =================== */
+        .error-msg {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid #f5c6cb;
+            margin-top: 10px;
+            display: none;
+            font-weight: 600;
+        }
+
+        /* =================== TOAST =================== */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #003366;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Sarabun', sans-serif;
+            z-index: 9999;
+            transition: transform 0.4s ease;
+            pointer-events: none;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* =================== REQUIRED MARKER =================== */
+        .req { color: #dc3545; margin-left: 2px; }
+
+        /* =================== NATIONAL ID =================== */
+        input#national_id.valid   { border-color: var(--success-color); background-color: #f0fff4; }
+        input#national_id.invalid { border-color: var(--danger-color);  background-color: #fff5f5; }
+        #national_id_note.error   { color: var(--danger-color); font-style: normal; font-weight: 600; }
+        #national_id_note.success { color: var(--success-color); font-style: normal; font-weight: 600; }
+
+        .subtitle {
+            font-size: 14px;   /* ปรับขนาดตัวอักษรให้เล็กลง */
+            text-align: mid;  /* จัดชิดซ้าย */
+            margin-top: 5px;   /* เว้นระยะด้านบนเล็กน้อย */
+            font-weight: normal; /* ไม่ต้องหนาเกินไป */
+            color: #555;       /* สีเทาอ่อนให้อ่านง่าย */
+                }
+        .form-group input[type="date"],
+        .form-group input[type="time"],
+        .form-group input[type="datetime-local"] {
+            width: 100%;          /* ให้กว้างเต็มบรรทัด */
+            padding: 8px;         /* เพิ่มช่องว่างด้านใน */
+            font-size: 16px;      /* ขนาดตัวอักษรเท่ากัน */
+            border: 1px solid #ccc; /* เส้นขอบ */
+            border-radius: 4px;   /* มุมโค้ง */
+            box-sizing: border-box;
+            }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"] {
+            width: 100%;          /* ให้กว้างเต็มบรรทัด */
+            padding: 8px;         /* เพิ่มช่องว่างด้านใน */
+            font-size: 16px;      /* ขนาดตัวอักษรเท่ากัน */
+            border: 1px solid #ccc; /* เส้นขอบ */
+            border-radius: 4px;   /* มุมโค้ง */
+            box-sizing: border-box;
+            }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🏥 แบบคัดกรอง E-Smart CKD Screening <br>(รพ.สต.ห้วยกะปิ จังหวัดชลบุรี)</h1>
+        <h2 class="subtitle">สำหรับบุคลากรทางการแพทย์</h2>        
+    </div>
+</div>
+
+    <form id="ckdForm" novalidate>
+
+        <!-- ===== ข้อมูลเบื้องต้น ===== -->
+       <div class="form-row">
+    <div class="form-group">
+        <label for="date">📅 วันที่รับบริการ <span class="req">*</span></label>
+        <input type="date" id="date" required>
+    </div>
+    <div class="form-group">
+        <label for="time">⏰ เวลา <span class="req">*</span></label>
+        <input type="time" id="time" required>
+    </div>
+</div>
+
+
+
+
+
+        <!-- ===== หมวด 1: ข้อมูลทั่วไป ===== -->
+        <div class="section-title">📋 1. ข้อมูลทั่วไป</div>
+<div class="form-row">
+    <div class="form-group">
+        <label for="name">ชื่อ-นามสกุล <span class="req">*</span></label>
+        <input type="text" id="name" placeholder="ระบุชื่อนามสกุล" required>
+    </div>
+    <div class="form-group">
+        <label for="hn">HN <span class="req">*</span></label>
+        <input type="text" id="hn" placeholder="ระบุเลขประจำตัวผู้ป่วย" required>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label for="national_id">🪪 เลขบัตรประชาชน <span class="req">*</span></label>
+        <input type="text" id="national_id" placeholder="X-XXXX-XXXXX-XX-X" maxlength="17" required
+            oninput="formatNationalId(this)" onblur="validateNationalId(this)">
+        <p class="note" id="national_id_note">กรอกตัวเลข 13 หลัก (จะจัดรูปแบบให้อัตโนมัติ)</p>
+    </div>
+</div>
+
+<!-- ช่องกรอกเบอร์โทรศัพท์ -->
+<div class="form-row">
+    <div class="form-group">
+        <label for="phone">📞 เบอร์โทรศัพท์ <span class="req">*</span></label>
+        <input type="tel" id="phone" placeholder="เช่น 081-234-5678" maxlength="10" required>
+    </div>
+</div>
+
+<!-- ช่องกรอกชื่อญาติ/บุคคลที่สามารถติดต่อได้ -->
+<div class="form-row">
+    <div class="form-group">
+        <label for="relative_name">👨‍👩‍👧‍👦 ชื่อญาติ / บุคคลที่สามารถติดต่อได้ <span class="req">*</span></label>
+        <input type="text" id="relative_name" placeholder="ระบุชื่อญาติหรือบุคคลที่สามารถติดต่อได้" required>
+    </div>
+    <div class="form-group">
+        <label for="relative_phone">📞 เบอร์โทรศัพท์ญาติ/บุคคลที่สามารถติดต่อได้ <span class="req">*</span></label>
+        <input type="tel" id="relative_phone" placeholder="เช่น 089-123-4567" maxlength="10" required>
+    </div>
+</div>
+
+        <!-- ===== หมวด 2: ข้อมูลทางกายภาพ ===== -->
+        <div class="section-title">🏃 2. ข้อมูลทางกายภาพ</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="sex">2.1 เพศ <span class="req">*</span></label>
+                <select id="sex" required onchange="updateAllScoreNotes()">
+                    <option value="">-- เลือกเพศ --</option>
+                    <option value="male">ชาย</option>
+                    <option value="female">หญิง</option>
+                </select>
+                <span id="sex_score_note" class="scoring-note"></span>
+            </div>
+            <div class="form-group">
+                <label for="age">2.2 อายุ (ปี) <span class="req">*</span></label>
+                <input type="number" id="age" placeholder="ระบุอายุ" min="0" max="120" required oninput="updateAllScoreNotes()">
+                <span id="age_score_note" class="scoring-note"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>2.3 น้ำหนัก / ส่วนสูง / BMI</label>
+                <div class="inline-group">
+                    <input type="number" step="0.1" id="weight_kg" placeholder="นน. (กก.)" min="0" oninput="calcBMI()">
+                    <span class="inline-sep">/</span>
+                    <input type="number" id="height_cm" placeholder="สส. (ซม.)" min="0" oninput="calcBMI()">
+                    <input type="text" id="bmi" readonly placeholder="BMI" style="text-align:center; background:#eee;">
+                </div>
+                <span id="bmi_score_note" class="scoring-note"></span>
+            </div>
+            <div class="form-group">
+                <label for="waist_cm">2.4 รอบเอว (เซนติเมตร) <span class="req">*</span></label>
+                <input type="number" id="waist_cm" placeholder="ระบุรอบเอว" min="0" required oninput="updateAllScoreNotes()">
+                <span id="waist_score_note" class="scoring-note"></span>
+            </div>
+        </div>
+
+        <!-- ===== หมวด 3: ที่อยู่ ===== -->
+        <div class="section-title">📍 3. ที่อยู่ (หมู่บ้านในสังกัดตำบลห้วยกะปิ)</div>
+
+<div class="form-group">
+    <label for="address">กรอกที่อยู่ <span class="req">*</span></label>
+    <input type="text" id="address" placeholder="เช่น บ้านเลขที่ 123/4" required>
+</div>
+
+<div class="form-group">
+    <label for="village">เลือกหมู่บ้าน <span class="req">*</span></label>
+    <select id="village" required>
+        <option value="">-- เลือกหมู่บ้าน --</option>
+        <option value="หมู่ 1 ทุ่งสระ">หมู่ 1 ทุ่งสระ</option>
+        <option value="หมู่ 2 ห้วยกะปิ">หมู่ 2 ห้วยกะปิ</option>
+        <option value="หมู่ 3 หนองสมอ">หมู่ 3 หนองสมอ</option>
+        <option value="หมู่ 4 ซากพุดซา">หมู่ 4 ซากพุดซา</option>
+        <option value="หมู่ 5 หนองกะเสริม">หมู่ 5 หนองกะเสริม</option>
+        <option value="หมู่ 6 ไร่ไหหลำ">หมู่ 6 ไร่ไหหลำ</option>
+        <option value="หมู่ 7 มาบหวาย">หมู่ 7 มาบหวาย</option>
+    </select>
+</div>
+
+
+
+        <!-- ===== หมวด 4: ประวัติโรคและพฤติกรรม ===== -->
+        <div class="section-title">🩺 4. ประวัติทางการแพทย์และพฤติกรรม</div>
+
+        <!-- โรคประจำตัว -->
+        <div class="checkbox-group-wrapper">
+            <div class="checkbox-group-title">4.1 โรคประจำตัว (เลือกได้มากกว่า 1 ข้อ)</div>
+
+            <div class="checkbox-item">
+                <input type="checkbox" id="cond_dm" onchange="toggleDetail('cond_dm','cond_dm_duration'); updateAllScoreNotes();">
+                <label for="cond_dm"><b>เบาหวาน</b> — ระยะเวลา (ปี)</label>
+                <input type="number" id="cond_dm_duration" class="condition-detail" placeholder="ปี" min="0">
+                <span class="scoring-note" style="font-size:12px; margin-left:8px;">⚠️ ไม่เป็นเบาหวาน = +2 คะแนน | เป็นเบาหวาน = 0 คะแนน</span>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="cond_ht" onchange="toggleDetail('cond_ht','cond_ht_duration');">
+                <label for="cond_ht"><b>ความดันโลหิตสูง</b> — ระยะเวลา (ปี)</label>
+                <input type="number" id="cond_ht_duration" class="condition-detail" placeholder="ปี" min="0">
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="cond_dlp" onchange="toggleDetail('cond_dlp','cond_dlp_duration');">
+                <label for="cond_dlp"><b>ไขมันในเลือดสูง</b> — ระยะเวลา (ปี)</label>
+                <input type="number" id="cond_dlp_duration" class="condition-detail" placeholder="ปี" min="0">
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="cond_sle">
+                <label for="cond_sle"><b>โรคแพ้ภูมิตัวเอง (SLE)</b></label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="cond_gout" onchange="toggleDetail('cond_gout','cond_gout_duration');">
+                <label for="cond_gout"><b>โรคเกาต์</b> — ระยะเวลา (ปี)</label>
+                <input type="number" id="cond_gout_duration" class="condition-detail" placeholder="ปี" min="0">
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="cond_kidney_stone" onchange="toggleDetail('cond_kidney_stone','cond_kidney_stone_duration');">
+                <label for="cond_kidney_stone"><b>นิ่วในไต/ทางเดินปัสสาวะ</b> — ระยะเวลา (ปี)</label>
+                <input type="number" id="cond_kidney_stone_duration" class="condition-detail" placeholder="ปี" min="0">
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="cond_family_ckd">
+                <label for="cond_family_ckd"><b>ประวัติครอบครัวเป็นโรคไต (บุพการีหรือพี่น้อง)</b></label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="cond_other" onchange="toggleDetail('cond_other','cond_other_specify');">
+                <label for="cond_other"><b>อื่นๆ</b> — ระบุ:</label>
+                <input type="text" id="cond_other_specify" class="condition-detail text-wide" placeholder="ชื่อโรค">
+            </div>
+        </div>
+
+        <!-- ข้อบ่งชี้โรค CKD -->
+        <div class="section-title">🚨 5. ข้อบ่งชี้ของโรค CKD (เลือกได้มากกว่า 1 ข้อ)</div>
+        <div class="checkbox-group-wrapper">
+                 
+            <div class="checkbox-sub-title">🔴 อาการ:</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_edema_pitting" 
+           onchange="toggleDetail('indicator_edema_pitting','indicator_edema_pitting_duration');">
+    <label for="indicator_edema_pitting">บวมกดบุ๋ม (Pitting edema) ที่ขา/หลังเท้า — ระยะเวลา</label>
+    <input type="number" id="indicator_edema_pitting_duration" class="condition-detail" placeholder="เดือน" min="0">
+</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_edema_eyelid" 
+           onchange="toggleDetail('indicator_edema_eyelid','indicator_edema_eyelid_duration');">
+    <label for="indicator_edema_eyelid">บวมเปลือกตา 2 ข้าง — ระยะเวลา</label>
+    <input type="number" id="indicator_edema_eyelid_duration" class="condition-detail" placeholder="เดือน" min="0">
+</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_backpain" 
+           onchange="toggleDetail('indicator_backpain','indicator_backpain_duration');">
+    <label for="indicator_backpain">ปวดหลัง คลำก้อนบริเวณบั้นเอว (CVA positive) — ระยะเวลา</label>
+    <input type="number" id="indicator_backpain_duration" class="condition-detail" placeholder="เดือน" min="0">
+</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_fatigue" 
+           onchange="toggleDetail('indicator_fatigue','indicator_fatigue_duration');">
+    <label for="indicator_fatigue">อ่อนเพลียผิดปกติ เหนื่อยง่าย ไม่มีแรง — ระยะเวลา</label>
+    <input type="number" id="indicator_fatigue_duration" class="condition-detail" placeholder="เดือน" min="0">
+</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_nausea" 
+           onchange="toggleDetail('indicator_nausea','indicator_nausea_duration');">
+    <label for="indicator_nausea">คลื่นไส้ อาเจียน เบื่ออาหาร — ระยะเวลา</label>
+    <input type="number" id="indicator_nausea_duration" class="condition-detail" placeholder="เดือน" min="0">
+</div>
+
+            <div class="checkbox-sub-title">🟡 พฤติกรรมเสี่ยง:</div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="behavior_nsaid">
+                <label for="behavior_nsaid">ใช้ยาแก้ปวดกลุ่ม NSAID, ยาลูกกลอน, ยาต้ม, ยาหม้อ, ยาชุด เป็นประจำ</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="behavior_lowater">
+                <label for="behavior_lowater">ดื่มน้ำน้อย</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="behavior_highsalt">
+                <label for="behavior_highsalt">รับประทานอาหารรสเค็มจัดเป็นประจำ</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="behavior_smoking">
+                <label for="behavior_smoking">สูบบุหรี่ (ปัจจุบันหรือเลิกไม่เกิน 5 ปี)</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="behavior_alcohol">
+                <label for="behavior_alcohol">ดื่มสุราเป็นประจำ</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="behavior_highprotein">
+                <label for="behavior_highprotein">รับประทานโปรตีนสูงเป็นประจำ (เนื้อสัตว์มาก)</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="behavior_herbal">
+                <label for="behavior_herbal">ใช้สมุนไพร/อาหารเสริมที่ไม่ผ่านการรับรองเป็นประจำ</label>
+            </div>
+
+            <div class="checkbox-sub-title">🟠 ปัสสาวะผิดปกติ:</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_urine_color" 
+           onchange="toggleDetail('indicator_urine_color','indicator_urine_color_duration');">
+    <label for="indicator_urine_color">ปัสสาวะสีผิดปกติ (เลือด, สีชาแก่, สีน้ำล้างเนื้อ) — ระยะเวลา</label>
+    <input type="number" id="indicator_urine_color_duration" class="condition-detail" placeholder="เดือน" min="0">
+</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_urine_foam" 
+           onchange="toggleDetail('indicator_urine_foam','indicator_urine_foam_duration');">
+    <label for="indicator_urine_foam">ปัสสาวะเป็นฟองผิดปกติ — ระยะเวลา</label>
+    <input type="number" id="indicator_urine_foam_duration" class="condition-detail" placeholder="เดือน" min="0">
+</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_urine_nocturia" 
+           onchange="toggleDetail('indicator_urine_nocturia','indicator_urine_nocturia_duration'); toggleDetail('indicator_urine_nocturia','indicator_urine_nocturia_count'); toggleDetail('indicator_urine_nocturia','indicator_urine_nocturia_count_label'); toggleDetail('indicator_urine_nocturia','indicator_urine_nocturia_count_unit');">
+    <label for="indicator_urine_nocturia">ปัสสาวะกลางคืน &gt;1 ครั้ง — ระยะเวลา</label>
+    <input type="number" id="indicator_urine_nocturia_duration" class="condition-detail" placeholder="เดือน" min="0">
+    <span class="condition-detail" id="indicator_urine_nocturia_count_label" style="display:none;">จำนวน</span>
+    <input type="number" id="indicator_urine_nocturia_count" class="condition-detail" placeholder="ครั้ง" min="0">
+    <span class="condition-detail" id="indicator_urine_nocturia_count_unit" style="display:none;">ครั้ง/คืน</span>
+</div>
+
+<div class="checkbox-item">
+    <input type="checkbox" id="indicator_urine_less" 
+           onchange="toggleDetail('indicator_urine_less','indicator_urine_less_duration');">
+    <label for="indicator_urine_less">ปัสสาวะน้อยลงผิดปกติ — ระยะเวลา</label>
+    <input type="number" id="indicator_urine_less_duration" class="condition-detail" placeholder="เดือน" min="0">
+</div>
+
+        <!-- ===== หมวด 6: ผลตรวจทางห้องปฏิบัติการ ===== -->
+        <div class="section-title">🔬 6. ผลตรวจทางห้องปฏิบัติการ</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>6.1 ความดันโลหิต (mmHg) <span class="req">*</span></label>
+                <div class="inline-group">
+                    <input type="number" id="sbp_mmhg" placeholder="SBP" min="0" max="300" required oninput="updateAllScoreNotes()">
+                    <span class="inline-sep">/</span>
+                    <input type="number" id="dbp_mmhg" placeholder="DBP" min="0" max="200" required>
+                </div>
+                <span id="bp_score_note" class="scoring-note"></span>
+            </div>
+            <div class="form-group">
+                <label for="dtx">6.2 ระดับ DTX (mg/dL)</label>
+                <input type="number" step="0.1" id="dtx" placeholder="ระบุค่า (ถ้ามี)">
+                <p class="note">ตรวจเฉพาะผู้ป่วยเบาหวาน</p>
+            </div>
+            <div class="form-group">
+                <label for="hba1c">6.3 ระดับ HbA1c (%)</label>
+                <input type="number" step="0.1" id="hba1c" placeholder="ระบุค่า (ถ้ามี)">
+                <p class="note">ตรวจเฉพาะผู้ป่วยเบาหวาน</p>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="bun_mg_dl">BUN (mg/dL)</label>
+                <input type="number" step="0.1" id="bun_mg_dl" placeholder="ค่าปกติ 7-20 mg/dL">
+                <p class="note">Blood Urea Nitrogen</p>
+            </div>
+            <div class="form-group">
+                <label for="creatinine_mg_dl">Serum Creatinine (mg/dL) <span class="req">*</span></label>
+                <input type="number" step="0.01" id="creatinine_mg_dl" placeholder="ระบุค่า" min="0" required oninput="calcACR()">
+                <p class="note">ชาย ปกติ 0.7-1.2 | หญิง 0.5-1.0 mg/dL</p>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="egfr">eGFR (ml/min/1.73m²)</label>
+                <input type="number" step="0.1" id="egfr" placeholder="ระบุค่า (ถ้ามี)" min="0" oninput="calcEGFRStage()">
+            </div>
+            <div class="form-group">
+                <label for="egfr_stage_readonly">ระยะโรคไต (CKD Stage)</label>
+                <input type="text" id="egfr_stage_readonly" readonly placeholder="คำนวณจาก eGFR อัตโนมัติ">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="albumin_mg_l">Albuminuria / Microalbumin (mg/L)</label>
+                <input type="number" step="0.1" id="albumin_mg_l" placeholder="ระบุค่า (ถ้ามี)" min="0" oninput="calcACR()">
+                <p class="note">ระดับอัลบูมินรั่วในปัสสาวะ</p>
+            </div>
+            <div class="form-group">
+                <label for="albuminuria_status_readonly">การแปลผล Albuminuria (ACR)</label>
+                <input type="text" id="albuminuria_status_readonly" readonly placeholder="คำนวณจาก Albumin/Cr อัตโนมัติ">
+                <p class="note">Albumin/Creatinine Ratio (ACR)</p>
+            </div>
+        </div>
+
+        <div id="errorMsg" class="error-msg"></div>
+
+        <div class="btn-wrapper">
+            <button type="submit" id="btn_calculate_show" class="btn-submit">
+                ✅ คำนวณผลและบันทึกข้อมูล
+            </button>
+            <button type="button" id="btn_reset" class="btn-reset" onclick="resetForm()">
+                🔄 ล้างข้อมูล
+            </button>
+        </div>
+        <div id="loading">⏳ กำลังประมวลผลและบันทึกข้อมูล...</div>
+    </form>
+
+    <!-- ===== กล่องแสดงผล ===== -->
+    <div id="resultWrapper" class="result-wrapper">
+        <div class="section-title">📊 สรุปผลการประเมินคัดกรอง CKD</div>
+        <div id="resultBox" class="result-box">
+            <div class="result-title-main" id="res_risk_title_main"></div>
+            <div class="result-grid">
+                <div class="result-item">
+                    <span class="label">ผลรวมคะแนนความเสี่ยง</span>
+                    <span class="value" id="res_total_score">—</span> คะแนน
+                </div>
+                <div class="result-item">
+                    <span class="label">ระดับความเสี่ยงโรคไต</span>
+                    <div><span class="risk-badge" id="res_risk_level"></span></div>
+                </div>
+                <div class="result-item">
+                    <span class="label">ระยะของโรคไต (CKD Stage)</span>
+                    <span class="value" id="res_egfr_stage"></span>
+                </div>
+                <div class="result-item">
+                    <span class="label">การแปลผล Albuminuria (ACR)</span>
+                    <span class="value" id="res_albuminuria_status"></span>
+                </div>
+                <div class="result-item full-col">
+                    <span class="label">รายละเอียดคะแนน (Score Breakdown)</span>
+                    <div class="score-breakdown">
+                        <table id="res_score_table"></table>
+                    </div>
+                </div>
+            </div>
+            <p class="disclaimer">⚕️ ข้อมูลนี้ใช้ประกอบการพิจารณาเบื้องต้นเท่านั้น ควรพบแพทย์เพื่อการวินิจฉัยที่แน่นอน</p>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- ===== JavaScript ===== -->
+<script>
+// ============================================================
+// Helper Functions
+// ============================================================
+const $ = (id) => document.getElementById(id);
+const val = (id) => ($( id ) ? $( id ).value.trim() : '');
+const numVal = (id) => parseFloat(val(id)) || 0;
+const isChecked = (id) => $( id ) ? $( id ).checked : false;
+
+function toggleDetail(checkboxId, inputId) {
+    const cb = $(checkboxId);
+    const input = $(inputId);
+    if (!cb || !input) return;
+    // ใช้ setTimeout เพื่อให้รอ state ของ checkbox อัปเดตเสร็จก่อน
+    // (ป้องกัน double-trigger เมื่อ checkbox อยู่ภายใน <label>)
+    setTimeout(() => {
+        input.style.display = cb.checked ? 'inline-block' : 'none';
+        if (!cb.checked) input.value = '';
+    }, 0);
+}
+
+function showToast(msg, duration = 3000) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ============================================================
+// Auto-calculations (real-time)
+// ============================================================
+
+function calcBMI() {
+    const w = numVal('weight_kg');
+    const h = numVal('height_cm');
+    if (w > 0 && h > 0) {
+        const bmi = w / ((h / 100) ** 2);
+        $('bmi').value = bmi.toFixed(1);
+        let note = '';
+        if (bmi < 18.5) note = `BMI ${bmi.toFixed(1)} — ผอมเกินไป`;
+        else if (bmi < 23) note = `BMI ${bmi.toFixed(1)} — ปกติ`;
+        else if (bmi < 25) note = `BMI ${bmi.toFixed(1)} — น้ำหนักเกิน`;
+        else note = `BMI ${bmi.toFixed(1)} — อ้วน`;
+        $('bmi_score_note').textContent = note;
+    } else {
+        $('bmi').value = '';
+        $('bmi_score_note').textContent = '';
+    }
+    updateAllScoreNotes();
+}
+
+function calcEGFRStage() {
+    const e = numVal('egfr');
+    const field = $('egfr_stage_readonly');
+    if (!val('egfr')) { field.value = ''; return; }
+    if (e >= 90)       field.value = 'Stage G1 — ปกติหรือสูง (≥90)';
+    else if (e >= 60)  field.value = 'Stage G2 — ลดลงเล็กน้อย (60-89)';
+    else if (e >= 45)  field.value = 'Stage G3a — ลดลงเล็กน้อย-ปานกลาง (45-59)';
+    else if (e >= 30)  field.value = 'Stage G3b — ลดลงปานกลาง-มาก (30-44)';
+    else if (e >= 15)  field.value = 'Stage G4 — ลดลงมาก (15-29)';
+    else               field.value = 'Stage G5 — ไตเรื้อรังระยะสุดท้าย (<15)';
+}
+
+function calcACR() {
+    const albumin = numVal('albumin_mg_l');
+    const cr = numVal('creatinine_mg_dl');
+    const field = $('albuminuria_status_readonly');
+    if (!val('albumin_mg_l') || !cr) { field.value = ''; return; }
+    const acr = (albumin / cr) * 10;
+    if (acr < 30)        field.value = `A1 — ปกติ (ACR = ${acr.toFixed(1)} mg/g)`;
+    else if (acr <= 300) field.value = `A2 — ผิดปกติ Microalbuminuria (ACR = ${acr.toFixed(1)} mg/g)`;
+    else                 field.value = `A3 — ผิดปกติมาก Macroalbuminuria (ACR = ${acr.toFixed(1)} mg/g)`;
+}
+
+function updateAllScoreNotes() {
+    // เพศ
+    const sex = val('sex');
+    const sexScore = sex === 'male' ? 3 : 0;
+    $('sex_score_note').textContent = sex ? `คะแนน: ${sexScore > 0 ? '+' : ''}${sexScore}` : '';
+
+    // อายุ
+    const age = numVal('age');
+    let ageScore = 0;
+    if (age >= 55) ageScore = 4;
+    else if (age >= 45) ageScore = 2;
+    $('age_score_note').textContent = age ? `คะแนน: +${ageScore}${age < 45 ? ' (อายุน้อยกว่า 45 ปี)' : ''}` : '';
+
+    // รอบเอว
+    const waist = numVal('waist_cm');
+    let waistScore = 0;
+    if (sex === 'female' && waist >= 80) waistScore = 1;
+    else if (sex === 'male' && waist >= 90) waistScore = 1;
+    if (waist > 0) {
+        const limit = sex === 'male' ? '≥90 ซม.' : '≥80 ซม.';
+        $('waist_score_note').textContent = `คะแนน: +${waistScore} (เกณฑ์เพศ${sex === 'male' ? 'ชาย' : 'หญิง'} ${limit})`;
+    } else {
+        $('waist_score_note').textContent = '';
+    }
+
+    // SBP
+    const sbp = numVal('sbp_mmhg');
+    if (sbp > 0) {
+        let sbpScore = 0;
+        if (sbp < 120) sbpScore = -2;
+        else if (sbp <= 129) sbpScore = 0;
+        else if (sbp <= 139) sbpScore = 1;
+        else if (sbp <= 149) sbpScore = 2;
+        else if (sbp <= 159) sbpScore = 3;
+        else sbpScore = 4;
+        $('bp_score_note').textContent = `คะแนน: ${sbpScore >= 0 ? '+' : ''}${sbpScore} (SBP = ${sbp} mmHg)`;
+    } else {
+        $('bp_score_note').textContent = '';
+    }
+}
+
+// ============================================================
+// Validation
+// ============================================================
+function validateForm() {
+    const errors = [];
+    if (!val('date') && !val('timestamp')) errors.push('กรุณาระบุวันที่รับบริการ');
+    if (!val('name'))      errors.push('กรุณาระบุชื่อ-นามสกุล / รหัสสมมติ');
+    if (!val('hn'))        errors.push('กรุณาระบุ HN');
+    if (!val('sex'))       errors.push('กรุณาเลือกเพศ');
+    if (!val('age') || numVal('age') <= 0) errors.push('กรุณาระบุอายุที่ถูกต้อง');
+    if (!val('waist_cm') || numVal('waist_cm') <= 0) errors.push('กรุณาระบุรอบเอว');
+    if (!val('village'))   errors.push('กรุณาเลือกหมู่บ้าน');
+    if (!val('sbp_mmhg') || numVal('sbp_mmhg') <= 0) errors.push('กรุณาระบุค่าความดันโลหิต SBP');
+    if (!val('dbp_mmhg') || numVal('dbp_mmhg') <= 0) errors.push('กรุณาระบุค่าความดันโลหิต DBP');
+    if (!val('creatinine_mg_dl') || numVal('creatinine_mg_dl') <= 0) errors.push('กรุณาระบุค่า Serum Creatinine');
+    return errors;
+}
+
+// ============================================================
+// Main Calculate & Submit
+// ============================================================
+$('ckdForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Validation
+    const errors = validateForm();
+    const errEl = $('errorMsg');
+    if (errors.length > 0) {
+        errEl.innerHTML = '⚠️ กรุณาแก้ไขข้อมูลต่อไปนี้:<br>• ' + errors.join('<br>• ');
+        errEl.style.display = 'block';
+        errEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+    errEl.style.display = 'none';
+
+    // ===== คำนวณคะแนน =====
+    let totalScore = 0;
+    const scoreDetails = [];
+
+    // 1. เพศ
+    const sex = val('sex');
+    const sexScore = sex === 'male' ? 3 : 0;
+    totalScore += sexScore;
+    scoreDetails.push({ label: 'เพศ', detail: sex === 'male' ? 'ชาย' : 'หญิง', score: sexScore });
+
+    // 2. อายุ
+    const age = numVal('age');
+    let ageScore = 0;
+    if (age >= 55) ageScore = 4;
+    else if (age >= 45) ageScore = 2;
+    totalScore += ageScore;
+    scoreDetails.push({ label: 'อายุ', detail: `${age} ปี`, score: ageScore });
+
+    // 3. รอบเอว
+    const waist = numVal('waist_cm');
+    let waistScore = 0;
+    if (sex === 'female' && waist >= 80) waistScore = 1;
+    else if (sex === 'male' && waist >= 90) waistScore = 1;
+    totalScore += waistScore;
+    scoreDetails.push({ label: 'รอบเอว', detail: `${waist} ซม.`, score: waistScore });
+
+    // 4. เบาหวาน (ไม่เป็นได้คะแนน)
+    const dmScore = isChecked('cond_dm') ? 0 : 2;
+    totalScore += dmScore;
+    scoreDetails.push({ label: 'เบาหวาน', detail: isChecked('cond_dm') ? 'เป็น' : 'ไม่เป็น', score: dmScore });
+
+    // 5. ความดัน SBP
+    const sbp = numVal('sbp_mmhg');
+    let sbpScore = 0;
+    if (sbp < 120)      sbpScore = -2;
+    else if (sbp <= 129) sbpScore = 0;
+    else if (sbp <= 139) sbpScore = 1;
+    else if (sbp <= 149) sbpScore = 2;
+    else if (sbp <= 159) sbpScore = 3;
+    else                 sbpScore = 4;
+    totalScore += sbpScore;
+    scoreDetails.push({ label: 'SBP', detail: `${sbp} mmHg`, score: sbpScore });
+
+    // ===== ระดับความเสี่ยง =====
+    let riskTitle, riskPercentage, riskClass;
+    if (totalScore <= 2) {
+        riskTitle = 'เสี่ยงน้อย'; riskPercentage = '<5%'; riskClass = 'risk-low';
+    } else if (totalScore <= 6) {
+        riskTitle = 'เสี่ยงปานกลาง'; riskPercentage = '5-10%'; riskClass = 'risk-medium';
+    } else if (totalScore <= 9) {
+        riskTitle = 'เสี่ยงสูง'; riskPercentage = '10-20%'; riskClass = 'risk-high';
+    } else {
+        riskTitle = 'เสี่ยงสูงมาก'; riskPercentage = '>20%'; riskClass = 'risk-veryhigh';
+    }
+
+    // ===== CKD Stage =====
+    const egfrVal = val('egfr');
+    let ckdStageDisplay = 'ไม่มีข้อมูล eGFR';
+    let ckdStageShort = 'ไม่ระบุ';
+    if (egfrVal) {
+        const e = numVal('egfr');
+        if (e >= 90)     { ckdStageDisplay = 'Stage G1 — ปกติ/สูง (≥90)'; ckdStageShort = 'G1'; }
+        else if (e >= 60){ ckdStageDisplay = 'Stage G2 — ลดลงเล็กน้อย (60-89)'; ckdStageShort = 'G2'; }
+        else if (e >= 45){ ckdStageDisplay = 'Stage G3a — ลดลงเล็กน้อย-ปานกลาง (45-59)'; ckdStageShort = 'G3a'; }
+        else if (e >= 30){ ckdStageDisplay = 'Stage G3b — ลดลงปานกลาง-มาก (30-44)'; ckdStageShort = 'G3b'; }
+        else if (e >= 15){ ckdStageDisplay = 'Stage G4 — ลดลงมาก (15-29)'; ckdStageShort = 'G4'; }
+        else             { ckdStageDisplay = 'Stage G5 — ไตเรื้อรังระยะสุดท้าย (<15)'; ckdStageShort = 'G5'; }
+    }
+
+    // ===== Albuminuria =====
+    const albuminVal = val('albumin_mg_l');
+    const cr = numVal('creatinine_mg_dl');
+    let albuminuriaStatus = 'ไม่มีข้อมูล';
+    if (albuminVal && cr > 0) {
+        const acr = (numVal('albumin_mg_l') / cr) * 10;
+        if (acr < 30)       albuminuriaStatus = `A1 — ปกติ (ACR ${acr.toFixed(1)} mg/g)`;
+        else if (acr <= 300) albuminuriaStatus = `A2 — Microalbuminuria (ACR ${acr.toFixed(1)} mg/g)`;
+        else                 albuminuriaStatus = `A3 — Macroalbuminuria (ACR ${acr.toFixed(1)} mg/g)`;
+    }
+
+    // ===== แสดงผลลัพธ์ =====
+    const rBox = $('resultBox');
+    rBox.className = 'result-box ' + riskClass;
+    $('res_risk_title_main').textContent = `ระดับความเสี่ยงโรคไต: ${riskTitle} (โอกาสเกิด ${riskPercentage})`;
+    $('res_total_score').textContent = totalScore;
+    $('res_risk_level').textContent = riskTitle + ' ' + riskPercentage;
+    $('res_egfr_stage').textContent = ckdStageDisplay;
+    $('res_albuminuria_status').textContent = albuminuriaStatus;
+
+    // Score breakdown table
+    let tableHTML = '';
+    scoreDetails.forEach(item => {
+        tableHTML += `<tr><td>${item.label}</td><td>${item.detail}</td><td>${item.score >= 0 ? '+' : ''}${item.score}</td></tr>`;
+    });
+    tableHTML += `<tr style="font-size:15px; border-top:2px solid currentColor;"><td colspan="2"><b>รวมคะแนน</b></td><td><b>${totalScore}</b></td></tr>`;
+    $('res_score_table').innerHTML = tableHTML;
+
+    $('resultWrapper').style.display = 'block';
+
+    // ===== เตรียมข้อมูลสำหรับบันทึก =====
+    const getCondDetail = (cbId, durId) => {
+        if (!isChecked(cbId)) return '';
+        const dur = durId ? val(durId) : '';
+        const name = cbId.replace('cond_','').replace('indicator_','').replace('behavior_','').toUpperCase();
+        return dur ? `${name}(${dur}ปี)` : name;
+    };
+
+    const condList = [
+        isChecked('cond_dm') ? `เบาหวาน${val('cond_dm_duration') ? '('+val('cond_dm_duration')+'ปี)' : ''}` : '',
+        isChecked('cond_ht') ? `ความดัน${val('cond_ht_duration') ? '('+val('cond_ht_duration')+'ปี)' : ''}` : '',
+        isChecked('cond_dlp') ? `ไขมัน${val('cond_dlp_duration') ? '('+val('cond_dlp_duration')+'ปี)' : ''}` : '',
+        isChecked('cond_sle') ? 'SLE' : '',
+        isChecked('cond_gout') ? `เกาต์${val('cond_gout_duration') ? '('+val('cond_gout_duration')+'ปี)' : ''}` : '',
+        isChecked('cond_kidney_stone') ? `นิ่ว${val('cond_kidney_stone_duration') ? '('+val('cond_kidney_stone_duration')+'ปี)' : ''}` : '',
+        isChecked('cond_family_ckd') ? 'ประวัติครอบครัวไต' : '',
+        isChecked('cond_other') ? `อื่นๆ:${val('cond_other_specify')}` : '',
+    ].filter(v => v).join(', ') || '-';
+
+    const indicatorList = [
+        isChecked('indicator_edema_pitting') ? `บวมกดบุ๋ม(${val('indicator_edema_pitting_duration')}เดือน)` : '',
+        isChecked('indicator_edema_eyelid') ? `บวมตา(${val('indicator_edema_eyelid_duration')}เดือน)` : '',
+        isChecked('indicator_backpain') ? 'CVA+' : '',
+        isChecked('indicator_fatigue') ? 'อ่อนเพลีย' : '',
+        isChecked('indicator_nausea') ? 'คลื่นไส้' : '',
+        isChecked('behavior_nsaid') ? 'NSAID' : '',
+        isChecked('behavior_lowater') ? 'น้ำน้อย' : '',
+        isChecked('behavior_highsalt') ? 'เค็มจัด' : '',
+        isChecked('behavior_smoking') ? 'สูบบุหรี่' : '',
+        isChecked('behavior_alcohol') ? 'ดื่มสุรา' : '',
+        isChecked('behavior_highprotein') ? 'โปรตีนสูง' : '',
+        isChecked('behavior_herbal') ? 'สมุนไพร/อาหารเสริม' : '',
+        isChecked('indicator_urine_color') ? 'ปัสสาวะผิดสี' : '',
+        isChecked('indicator_urine_foam') ? 'ปัสสาวะเป็นฟอง' : '',
+        isChecked('indicator_urine_nocturia') ? `Nocturia(${val('indicator_urine_nocturia_duration')}เดือน,${val('indicator_urine_nocturia_count')}ครั้ง)` : '',
+        isChecked('indicator_urine_less') ? 'ปัสสาวะน้อย' : '',
+    ].filter(v => v).join(', ') || '-';
+
+    const bmiCalc = numVal('weight_kg') > 0 && numVal('height_cm') > 0
+        ? (numVal('weight_kg') / ((numVal('height_cm')/100)**2)).toFixed(1)
+        : val('bmi');
+
+    const formDataObj = {
+        timestamp:              val('date') || val('timestamp'),
+        name:                   val('name'),
+        national_id:            val('national_id'),
+        hn:                     val('hn'),
+        sex:                    sex === 'male' ? 'ชาย' : 'หญิง',
+        age:                    age,
+        bmi:                    bmiCalc,
+        waist_cm:               waist,
+        address:                val('village'),
+        medical_conditions:     condList,
+        sbp_mmhg:               sbp,
+        dbp_mmhg:               numVal('dbp_mmhg'),
+        dtx:                    val('dtx') || '-',
+        bun_mg_dl:              val('bun_mg_dl') || '-',
+        creatinine_mg_dl:       cr,
+        egfr_ml_min_1_73m2:     val('egfr') || '-',
+        egfr_stage:             ckdStageShort,
+        albuminuria_status:     albuminuriaStatus,
+        total_score:            totalScore,
+        risk_level_title:       riskTitle,
+        risk_percentage:        riskPercentage,
+        ckd_indicators:         indicatorList
+    };
+
+    // ===== บันทึกข้อมูล =====
+    $('loading').style.display = 'block';
+    $('btn_calculate_show').disabled = true;
+
+    // ตรวจสอบว่าอยู่ใน Google Apps Script หรือไม่
+    if (typeof google !== 'undefined' && google.script && google.script.run) {
+        // ส่งผ่าน Google Apps Script
+        google.script.run
+            .withSuccessHandler(function(response) {
+                $('loading').style.display = 'none';
+                $('btn_calculate_show').disabled = false;
+                if (response === 'Success') {
+                    showToast('✅ บันทึกข้อมูลเข้า Google Sheet สำเร็จ!');
+                    $('resultWrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    showToast('⚠️ บันทึกไม่สำเร็จ: ' + response, 5000);
+                }
+            })
+            .withFailureHandler(function(error) {
+                $('loading').style.display = 'none';
+                $('btn_calculate_show').disabled = false;
+                showToast('❌ เชื่อมต่อ Server ล้มเหลว: ' + error.message, 5000);
+            })
+            .saveData(formDataObj);
+    } else {
+        // Standalone mode — แสดงผลอย่างเดียว (ไม่มี Google Sheet)
+        setTimeout(() => {
+            $('loading').style.display = 'none';
+            $('btn_calculate_show').disabled = false;
+            showToast('✅ คำนวณผลสำเร็จ (ไม่ได้เชื่อมต่อ Google Sheet)');
+            $('resultWrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 800);
+    }
+});
+
+// ============================================================
+// Reset Form
+// ============================================================
+function resetForm() {
+    if (!confirm('ต้องการล้างข้อมูลทั้งหมดและเริ่มใหม่?')) return;
+    $('ckdForm').reset();
+    $('bmi').value = '';
+    $('egfr_stage_readonly').value = '';
+    $('albuminuria_status_readonly').value = '';
+    // ล้าง national ID
+    const nid = $('national_id');
+    nid.classList.remove('valid', 'invalid');
+    const nidNote = $('national_id_note');
+    nidNote.textContent = 'กรอกตัวเลข 13 หลัก (จะจัดรูปแบบให้อัตโนมัติ)';
+    nidNote.className = 'note';
+    $('resultWrapper').style.display = 'none';
+    $('errorMsg').style.display = 'none';
+    // ซ่อน condition details ทั้งหมด
+    document.querySelectorAll('.condition-detail').forEach(el => {
+        el.style.display = 'none';
+        el.value = '';
+    });
+    // ล้าง score notes
+    ['sex_score_note','age_score_note','bmi_score_note','waist_score_note','bp_score_note'].forEach(id => {
+        $(id).textContent = '';
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast('🔄 ล้างข้อมูลเรียบร้อย');
+}
+
+// ============================================================
+// เลขบัตรประชาชน — Format & Validate
+// ============================================================
+function formatNationalId(input) {
+    // ดึงเฉพาะตัวเลข
+    let digits = input.value.replace(/\D/g, '').substring(0, 13);
+    // จัดรูปแบบ X-XXXX-XXXXX-XX-X
+    let formatted = '';
+    if (digits.length > 0)  formatted  = digits.substring(0, 1);
+    if (digits.length > 1)  formatted += '-' + digits.substring(1, 5);
+    if (digits.length > 5)  formatted += '-' + digits.substring(5, 10);
+    if (digits.length > 10) formatted += '-' + digits.substring(10, 12);
+    if (digits.length > 12) formatted += '-' + digits.substring(12, 13);
+    input.value = formatted;
+
+    // ล้าง state ขณะกรอก
+    input.classList.remove('valid', 'invalid');
+    const note = $('national_id_note');
+    note.textContent = 'กรอกตัวเลข 13 หลัก (จะจัดรูปแบบให้อัตโนมัติ)';
+    note.className = 'note';
+}
+
+function checkNationalIdDigit(digits) {
+    // ตรวจสอบ Checksum เลขบัตรประชาชนไทย
+    if (digits.length !== 13) return false;
+    let sum = 0;
+    for (let i = 0; i < 12; i++) sum += parseInt(digits[i]) * (13 - i);
+    const check = (11 - (sum % 11)) % 10;
+    return check === parseInt(digits[12]);
+}
+
+function validateNationalId(input) {
+    const digits = input.value.replace(/\D/g, '');
+    const note = $('national_id_note');
+    if (digits.length === 0) {
+        input.classList.remove('valid', 'invalid');
+        note.textContent = 'กรอกตัวเลข 13 หลัก (จะจัดรูปแบบให้อัตโนมัติ)';
+        note.className = 'note';
+        return;
+    }
+    if (digits.length !== 13) {
+        input.classList.remove('valid');
+        input.classList.add('invalid');
+        note.textContent = `❌ ต้องกรอก 13 หลัก (ขณะนี้กรอก ${digits.length} หลัก)`;
+        note.className = 'note error';
+        return;
+    }
+    if (!checkNationalIdDigit(digits)) {
+        input.classList.remove('valid');
+        input.classList.add('invalid');
+        note.textContent = '❌ เลขบัตรประชาชนไม่ถูกต้อง (Checksum ผิด)';
+        note.className = 'note error';
+        return;
+    }
+    input.classList.remove('invalid');
+    input.classList.add('valid');
+    note.textContent = '✅ เลขบัตรประชาชนถูกต้อง';
+    note.className = 'note success';
+}
+
+// ============================================================
+// Set today's date as default
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+    const today = new Date().toISOString().split('T')[0];
+    $('timestamp').value = today;
+});
+</script>
+</body>
+</html>
